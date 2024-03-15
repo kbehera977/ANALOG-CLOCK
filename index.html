@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analog Watch</title>
+<style>
+  body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+.watch {
+  width: 200px;
+  height: 200px;
+  border: 10px solid #333;
+  border-radius: 50%;
+  position: relative;
+}
+
+.hour, .minute, .second {
+  position: absolute;
+  width: 50%;
+  height: 2px;
+  background-color: #000;
+  top: 50%;
+  transform-origin: 100%;
+  transform: translate(0%, -50%);
+  transition: transform 0.5s cubic-bezier(0.4, 2.2, 0.6, 1);
+}
+
+.minute {
+  height: 1.5px;
+  background-color: #666;
+}
+
+.second {
+  height: 1px;
+  background-color: red;
+}
+</style>
+</head>
+<body>
+<div class="watch">
+  <div class="hour" id="hourHand"></div>
+  <div class="minute" id="minuteHand"></div>
+  <div class="second" id="secondHand"></div>
+</div>
+<script>
+  function updateClock() {
+  const now = new Date();
+
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const second = now.getSeconds();
+
+  const hourHand = document.getElementById('hourHand');
+  const minuteHand = document.getElementById('minuteHand');
+  const secondHand = document.getElementById('secondHand');
+
+  const hourDeg = (hour % 12) * 30 + minute * 0.5;
+  const minuteDeg = minute * 6 + second * 0.1;
+  const secondDeg = second * 6;
+
+  hourHand.style.transform = `rotate(${hourDeg}deg)`;
+  minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+  secondHand.style.transform = `rotate(${secondDeg}deg)`;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+</body>
+</html>
